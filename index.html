@@ -1,27 +1,36 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <link rel="stylesheet" href="index.css">
-        <script src="index.js"></script>
-    </head>
-    <body>
-        <div id="load" class="d-none">
-            <span class="loader"></span>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TwitAI Sentiment Analysis</title>
+    <link rel="stylesheet" href="index.css">
+    <script src="index.js" defer></script>
+</head>
+<body>
+    <div id="load" class="d-none">
+        <span class="loader"></span>
+    </div>
+
+    <h1>TwitAI Sentiment Analysis</h1>
+
+    <div class="topicCase">
+        <div class="form__group field">
+            <input type="input" class="form__field" name="topic" id='topic' required />
+            <label for="topic" class="form__label">Topic</label>
         </div>
-        <h1>TwitAI</h1>
-        <div class="topicCase">
-            <div class="form__group field">
-                <input type="input" class="form__field" name="topic" id='topic' required />
-                <label for="topic" class="form__label">Topic</label>
-            </div>
+    </div>
+
+    <div class="tweetCase">
+        <div class="form__group field">
+            <input type="input" class="form__field" name="Tweet" id='Tweet' required />
+            <button type="button" onclick="exe()">Prédire</button>
+            <label for="Tweet" class="form__label">Tweet</label>
         </div>
-        <div class="tweetCase">
-            <div class="form__group field">
-                <input type="input" class="form__field" name="Tweet" id='Tweet' required />
-                <button type="button" onclick="exe()">></button>
-                <label for="Tweet" class="form__label">Tweet</label>
-            </div>
-        </div>
-        <div id="snackbar">Error : <i>fields are empty</i></div>
-    </body>
+    </div>
+
+    <div id="output"></div>
+
+    <div id="snackbar">Error : <i>fields are empty</i></div>
+</body>
 </html>

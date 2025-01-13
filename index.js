@@ -5,13 +5,24 @@ function init() {
     Tweet.focus();
 }
 
+// Dictionnaire pour convertir les chiffres en texte
+const sentimentMapping = {
+    1: "Negative",
+    2: "Positive",
+    3: "Neutral",
+    4: "Irrelevant"
+};
+
 function exe() {
     const Tweet = document.getElementById('Tweet');
     const topic = document.getElementById('topic');
+    const output = document.getElementById('output');
+    const snackbar = document.getElementById("snackbar");
+
     if (Tweet.value === '' || topic.value === '') {
-        const x = document.getElementById("snackbar");
-        x.className = "show";
-        setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+        snackbar.textContent = "Error: Fields are empty!";
+        snackbar.className = "show";
+        setTimeout(function () { snackbar.className = snackbar.className.replace("show", ""); }, 3000);
     } else {
         const load = document.getElementById('load');
         load.classList.remove('d-none');
@@ -21,7 +32,7 @@ function exe() {
             topic: topic.value
         };
 
-        fetch("http://localhost:80/predict", {
+        fetch("http://localhost:8000/predict", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -35,16 +46,19 @@ function exe() {
             return response.json();
         })
         .then(result => {
-            console.log("Prédiction :", result);
-            const output = document.getElementById('output');
-            output.textContent = `Sentiment prédit : ${result.predicted_sentiment}`;
+            console.log("Prédiction reçue :", result);
+
+            // Convertir le chiffre en texte grâce au dictionnaire
+            const sentimentText = sentimentMapping[result.predicted_sentiment] || "Unknown";
+            output.textContent = `Sentiment prédit : ${sentimentText}`;
+            output.style.color = sentimentText === "Negative" ? "red" : sentimentText === "Positive" ? "green" : "orange";
         })
         .catch(error => {
             console.error("Erreur :", error);
-            alert("Une erreur est survenue. Vérifiez votre backend.");
+            output.textContent = "Une erreur est survenue, veuillez vérifier le backend.";
+            output.style.color = "red";
         })
         .finally(() => {
-            // Cacher le loader après la requête
             load.classList.add('d-none');
         });
     }
