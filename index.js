@@ -13,17 +13,20 @@ const sentimentMapping = {
     4: "Irrelevant"
 };
 
+function toast(text) {
+    const snackbar = document.getElementById("snackbar");
+    snackbar.textContent = text;
+    snackbar.className = "show";
+    setTimeout(function () { snackbar.className = snackbar.className.replace("show", ""); }, 3000);
+}
+
 function exe() {
     const Tweet = document.getElementById('Tweet');
     const topic = document.getElementById('topic');
     const output = document.getElementById('output');
-    const snackbar = document.getElementById("snackbar");
 
-    if (Tweet.value === '' || topic.value === '') {
-        snackbar.textContent = "Error: Fields are empty!";
-        snackbar.className = "show";
-        setTimeout(function () { snackbar.className = snackbar.className.replace("show", ""); }, 3000);
-    } else {
+    if (Tweet.value === '' || topic.value === '') toast("Error: Fields are empty!");
+    else {
         const load = document.getElementById('load');
         load.classList.remove('d-none');
 
@@ -50,13 +53,12 @@ function exe() {
 
             // Convertir le chiffre en texte grâce au dictionnaire
             const sentimentText = sentimentMapping[result.predicted_sentiment] || "Unknown";
-            output.textContent = `Sentiment prédit : ${sentimentText}`;
-            output.style.color = sentimentText === "Negative" ? "red" : sentimentText === "Positive" ? "green" : "orange";
+            const color = sentimentText === "Negative" ? "red" : sentimentText === "Positive" ? "green" : "orange";
+            output.innerHTML = `Sentiment prédit : <span style="color: ${color};">${sentimentText}</span>`;
         })
         .catch(error => {
             console.error("Erreur :", error);
-            output.textContent = "Une erreur est survenue, veuillez vérifier le backend.";
-            output.style.color = "red";
+            toast("Une erreur est survenue, veuillez vérifier le backend.");
         })
         .finally(() => {
             load.classList.add('d-none');

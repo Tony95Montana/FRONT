@@ -18,9 +18,6 @@ button {
 button:active {
     transform: translateY(4px);
 }
-i {
-    color: white;
-}
 h1 {
     text-align: center;
 }
@@ -36,6 +33,9 @@ h1 {
 #topic {
     width: 40%;
     display: block;
+}
+#output {
+    text-align: center;
 }
 
 .form__group {
