@@ -35,7 +35,7 @@ function exe() {
             topic: topic.value
         };
 
-        fetch("http://localhost:8000/predict", {
+        fetch("http://localhost:4000/tweet/predict", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
